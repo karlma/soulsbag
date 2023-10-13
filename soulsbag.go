@@ -39,6 +39,7 @@ func (s *SoulsBag) Init(sourceTyp, encodingTyp string, opts source.Options) erro
 	}
 	s.Encoder = enc
 
+	s.Opts = opts
 	return nil
 }
 
