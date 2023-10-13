@@ -11,9 +11,14 @@ type File struct {
 	Path string
 }
 
+var (
+	ErrFileNameEmpty   = errors.New("file name is empty")
+	ErrFileIsDirectory = errors.New("file is directory")
+)
+
 func (f File) Read() ([]byte, error) {
 	if f.Path == "" {
-		return nil, errors.New("file name is empty")
+		return nil, ErrFileNameEmpty
 	}
 
 	fileInfo, err := os.Stat(f.Path)
@@ -21,7 +26,7 @@ func (f File) Read() ([]byte, error) {
 		return nil, err
 	}
 	if fileInfo.IsDir() {
-		return nil, errors.New("file is directory")
+		return nil, ErrFileIsDirectory
 	}
 
 	data, err := os.ReadFile(f.Path)

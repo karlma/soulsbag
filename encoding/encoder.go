@@ -8,6 +8,11 @@ var (
 	supportedEncoding = map[string]NewEncodingFunc{}
 )
 
+var (
+	ErrUnsupportedEncoding = errors.New("unsupported encoding")
+	ErrNewFuncIsNil        = errors.New("encoding new func is nil")
+)
+
 type Encoder interface {
 	Encode(interface{}) ([]byte, error)
 	Decode([]byte, interface{}) error
@@ -21,11 +26,11 @@ func Register(typ string, newFunc NewEncodingFunc) {
 func New(typ string) (Encoder, error) {
 	newFunc, ok := supportedEncoding[typ]
 	if !ok {
-		return nil, errors.New("unsupported encoding")
+		return nil, ErrUnsupportedEncoding
 	}
 
 	if newFunc == nil {
-		return nil, errors.New("encoding new func is nil")
+		return nil, ErrNewFuncIsNil
 	}
 
 	return newFunc(), nil

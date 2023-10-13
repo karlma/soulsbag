@@ -14,6 +14,10 @@ type Options struct {
 type NewSourceFunc func(opts Options) (Source, error)
 
 var (
+	ErrUnsupportedSource = errors.New("unsupported source")
+	ErrNewFuncIsNil      = errors.New("source new func is nil")
+)
+var (
 	supportedSources = map[string]NewSourceFunc{}
 )
 
@@ -29,10 +33,10 @@ func Register(name string, newFunc NewSourceFunc) {
 func New(typ string, opts Options) (Source, error) {
 	newFunc, ok := supportedSources[typ]
 	if !ok {
-		return nil, errors.New("unsupported source")
+		return nil, ErrUnsupportedSource
 	}
 	if newFunc == nil {
-		return nil, errors.New("source new func is nil")
+		return nil, ErrNewFuncIsNil
 	}
 	return newFunc(opts)
 }
