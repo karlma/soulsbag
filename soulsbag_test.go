@@ -246,7 +246,7 @@ func TestSoulsBagWatch(t *testing.T) {
 		if err != nil {
 			t.Fatalf("read config error: %v", err)
 		}
-		originalData := string(sb.Data)
+		originalData := string(GetData())
 
 		watchWG := sync.WaitGroup{}
 		watchWG.Add(1)
@@ -266,7 +266,7 @@ func TestSoulsBagWatch(t *testing.T) {
 			t.Fatalf("read config error: %v", err)
 		}
 
-		currentData := string(sb.Data)
+		currentData := string(GetData())
 
 		diff := difflib.ContextDiff{
 			A:        difflib.SplitLines(originalData),

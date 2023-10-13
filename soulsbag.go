@@ -68,10 +68,21 @@ func Unmarshal(v interface{}) error {
 	return sb.Unmarshal(v)
 }
 
+// Watch the configuration content change.
+// PUT  - value is update
+// DELETE - key is deleted
 func Watch(watchFunc func(string)) error {
 	return sb.Watch(watchFunc)
 }
 
 func (s *SoulsBag) Watch(watchFunc func(string)) error {
 	return s.Source.Watch(watchFunc)
+}
+
+func (s *SoulsBag) GetData() []byte {
+	return s.Data
+}
+
+func GetData() []byte {
+	return sb.GetData()
 }
