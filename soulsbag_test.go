@@ -34,26 +34,6 @@ type (
 	}
 )
 
-var tomlData string = `
-[mysql]
-host = "192.168.1.234"
-port = 3306
-user = "root"
-password = "654321"
-max_idle_conns = 10
-max_open_conns = 30
-db_name = "soulsbag"`
-
-var myData string = `
-host = "192.168.1.234"
-port = 3306
-user = "root"
-password = "654321"
-max_idle_conns = 10
-max_open_conns = 30
-db_name = "soulsbag"
-enable_log = false`
-
 func TestSoulsbagFile(t *testing.T) {
 	t.Run("toml", func(t *testing.T) {
 		fileT(t, "./testdata.toml", "toml")

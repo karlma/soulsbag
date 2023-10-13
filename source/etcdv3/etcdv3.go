@@ -62,6 +62,7 @@ func NewSource(opts source.Options) (source.Source, error) {
 	}, nil
 }
 
+// import this module from soulsbag
 func init() {
 	source.Register("etcdv3", NewSource)
 }

@@ -45,6 +45,7 @@ func NewSource(opts source.Options) (source.Source, error) {
 	return File{Path: opts.Path}, nil
 }
 
+// import this module from soulsbag
 func init() {
 	source.Register("file", NewSource)
 }

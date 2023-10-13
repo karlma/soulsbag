@@ -24,6 +24,7 @@ func NewEncoder() encoding.Encoder {
 	return Codec{}
 }
 
+// import this module from soulsbag
 func init() {
 	encoding.Register("yaml", NewEncoder)
 }
