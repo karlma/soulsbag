@@ -14,6 +14,7 @@ type File struct {
 var (
 	ErrFileNameEmpty   = errors.New("file name is empty")
 	ErrFileIsDirectory = errors.New("file is directory")
+	ErrNotImplemented  = errors.New("not implemented yet")
 )
 
 func (f File) Read() ([]byte, error) {
@@ -39,6 +40,10 @@ func (f File) Read() ([]byte, error) {
 
 func (f File) String() string {
 	return "file"
+}
+
+func (f File) Watch(watchFunc func(string)) error {
+	return ErrNotImplemented
 }
 
 func NewSource(opts source.Options) (source.Source, error) {

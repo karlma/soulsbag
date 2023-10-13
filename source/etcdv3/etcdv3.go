@@ -2,6 +2,7 @@ package etcdv3
 
 import (
 	"context"
+	"fmt"
 	"strings"
 	"time"
 
@@ -50,6 +51,40 @@ func (e Etcdv3) Read() ([]byte, error) {
 
 func (e Etcdv3) String() string {
 	return "etcdv3"
+}
+
+func (e Etcdv3) Watch(watchFunc func(string)) error {
+	cli, err := clientv3.New(clientv3.Config{
+		Endpoints:   e.Endpoints,
+		DialTimeout: dialTimeout,
+		Username:    e.User,
+		Password:    e.Password,
+	})
+	if err != nil {
+		return err
+	}
+
+	go func() {
+		defer cli.Close()
+		// TODO: 优雅的退出for循环
+		for {
+			rch := cli.Watch(context.Background(), e.Key)
+			for wresp := range rch {
+				err = wresp.Err()
+				if err != nil {
+					// TODO: 处理错误
+					fmt.Println(err)
+				}
+
+				for _, ev := range wresp.Events {
+					//fmt.Printf("%s %q %q\n", ev.Type, ev.Kv.Key, ev.Kv.Value)
+					watchFunc(ev.Type.String())
+				}
+			}
+		}
+	}()
+
+	return nil
 }
 
 func NewSource(opts source.Options) (source.Source, error) {

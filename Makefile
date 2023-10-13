@@ -5,6 +5,8 @@ all: test
 mod:
 	go mod tidy
 
-test: mod
+test:
 	go test -v ./...
 
+clean:
+	go clean -testcache

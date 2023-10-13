@@ -55,6 +55,7 @@ func (s *SoulsBag) Read() error {
 	s.Data = data
 	return nil
 }
+
 func Read() error {
 	return sb.Read()
 }
@@ -65,4 +66,12 @@ func (s *SoulsBag) Unmarshal(v interface{}) error {
 
 func Unmarshal(v interface{}) error {
 	return sb.Unmarshal(v)
+}
+
+func Watch(watchFunc func(string)) error {
+	return sb.Watch(watchFunc)
+}
+
+func (s *SoulsBag) Watch(watchFunc func(string)) error {
+	return s.Source.Watch(watchFunc)
 }

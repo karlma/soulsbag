@@ -1,7 +1,10 @@
 package soulsbag
 
 import (
+	"sync"
 	"testing"
+
+	"github.com/pmezard/go-difflib/difflib"
 
 	"github.com/karlma/soulsbag/source"
 )
@@ -224,4 +227,56 @@ func etcdv3T_2(t *testing.T, encTyp string) {
 		t.Errorf("read towerCfg.NewServer.Domain: %s, expected: %s",
 			cfg.Tower.NewServer.Domain, "xxx.example.com")
 	}
+}
+
+func TestSoulsBagWatch(t *testing.T) {
+	t.Run("toml etcdv1", func(t *testing.T) {
+		encTyp := "toml"
+		err := Init("etcdv3", encTyp, source.Options{
+			Path:         "127.0.0.1:2379",
+			Key:          "cs/s4/soulsbag." + encTyp,
+			AuthUser:     "root",
+			AuthPassword: "123456",
+		})
+		if err != nil {
+			t.Errorf("init config error: %v", err)
+		}
+
+		err = Read()
+		if err != nil {
+			t.Fatalf("read config error: %v", err)
+		}
+		originalData := string(sb.Data)
+
+		watchWG := sync.WaitGroup{}
+		watchWG.Add(1)
+		t.Logf("waiting you to change config file ...")
+		err = Watch(func(event string) {
+			t.Logf("watch event: [%s]", event)
+			watchWG.Done()
+		})
+		if err != nil {
+			t.Fatalf("watch config error: %v", err)
+		}
+		watchWG.Wait()
+
+		// After modify, read again
+		err = Read()
+		if err != nil {
+			t.Fatalf("read config error: %v", err)
+		}
+
+		currentData := string(sb.Data)
+
+		diff := difflib.ContextDiff{
+			A:        difflib.SplitLines(originalData),
+			B:        difflib.SplitLines(currentData),
+			FromFile: "original",
+			ToFile:   "current",
+			Eol:      "\n",
+			Context:  2,
+		}
+		result, _ := difflib.GetContextDiffString(diff)
+		t.Logf("diff:\n%s", result)
+	})
 }

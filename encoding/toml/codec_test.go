@@ -95,7 +95,7 @@ func TestCodec_Decode(t *testing.T) {
 
 		v := map[string]any{}
 
-		err := codec.Decode([]byte(`invalid data`), v)
+		err := codec.Decode([]byte(`invalid data`), &v)
 		if err == nil {
 			t.Fatal("expected decoding to fail")
 		}

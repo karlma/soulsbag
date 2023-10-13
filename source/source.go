@@ -23,6 +23,7 @@ var (
 
 type Source interface {
 	Read() ([]byte, error)
+	Watch(watchFunc func(string)) error
 	String() string
 }
 
