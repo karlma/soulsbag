@@ -1,0 +1,3 @@
+# soulsbag
+
+A configuration service.
