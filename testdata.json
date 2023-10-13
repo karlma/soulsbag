@@ -1,0 +1,29 @@
+{
+    "mysql":
+    {
+        "host": "192.168.1.112",
+        "port": 3306,
+        "user": "rw_user",
+        "password": "changeme",
+        "max_idle_conns": 10,
+        "max_open_conns": 30,
+        "db_name": "soulsbag_db",
+        "enable_log": false
+    },
+    "tower":
+    {
+        "listen_ip": "0.0.0.0",
+        "listen_port": 4022,
+        "new_server":
+        {
+            "domain": "xxx.example.com",
+            "apps":
+            [
+                "4B25A2C8-6EFF-467D-A494-2FD7A3D25E73",
+                "D677F0A9-CAE3-40E6-B80D-62FC196050C9",
+                "E7A8B9C5-BFF9-43D4-B6DA-B1636FE0C992",
+                "89A29782-E335-4B76-8A70-ABFA9BC37EA3"
+            ]
+        }
+    }
+}

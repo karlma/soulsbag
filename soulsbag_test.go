@@ -15,10 +15,10 @@ type (
 		Port         int
 		User         string
 		Password     string
-		DBName       string `toml:"db_name" yaml:"db_name"`
-		MaxIdleConns int    `toml:"max_idle_conns" yaml:"max_idle_conns"`
-		MaxOpenConns int    `toml:"max_open_conns" yaml:"max_open_conns"`
-		EnableLog    bool   `toml:"enable_log" yaml:"enable_log"`
+		DBName       string `toml:"db_name" yaml:"db_name" json:"db_name"`
+		MaxIdleConns int    `toml:"max_idle_conns" yaml:"max_idle_conns" json:"max_idle_conns"`
+		MaxOpenConns int    `toml:"max_open_conns" yaml:"max_open_conns" json:"max_open_conns"`
+		EnableLog    bool   `toml:"enable_log" yaml:"enable_log" json:"enable_log"`
 	}
 	TowerNewServerCnf struct {
 		Domain string   `toml:"domain" yaml:"domain"`
@@ -26,9 +26,9 @@ type (
 	}
 
 	TowerCnf struct {
-		ListenIp   string            `toml:"listen_ip" yaml:"listen_ip"`
-		ListenPort int               `toml:"listen_port" yaml:"listen_port"`
-		NewServer  TowerNewServerCnf `toml:"new_server" yaml:"new_server"`
+		ListenIp   string            `toml:"listen_ip" yaml:"listen_ip" json:"listen_ip"`
+		ListenPort int               `toml:"listen_port" yaml:"listen_port" json:"listen_port"`
+		NewServer  TowerNewServerCnf `toml:"new_server" yaml:"new_server" json:"new_server"`
 	}
 
 	MyCnf struct {
@@ -49,6 +49,12 @@ func TestSoulsbagFile(t *testing.T) {
 	})
 	t.Run("yaml", func(t *testing.T) {
 		fileT_2(t, "./testdata.yaml", "yaml")
+	})
+	t.Run("json", func(t *testing.T) {
+		fileT(t, "./testdata.json", "json")
+	})
+	t.Run("json", func(t *testing.T) {
+		fileT_2(t, "./testdata.json", "json")
 	})
 }
 

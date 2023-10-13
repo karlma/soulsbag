@@ -2,6 +2,7 @@ package soulsbag
 
 import (
 	"github.com/karlma/soulsbag/encoding"
+	_ "github.com/karlma/soulsbag/encoding/json"
 	_ "github.com/karlma/soulsbag/encoding/toml"
 	_ "github.com/karlma/soulsbag/encoding/yaml"
 	"github.com/karlma/soulsbag/source"
