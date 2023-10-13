@@ -6,7 +6,10 @@ mod:
 	go mod tidy
 
 test:
-	go test -v ./...
+	go test -v --skip TestSoulsBagWatch ./...
+
+test_watch:
+	go test -v --run TestSoulsBagWatch
 
 clean:
 	go clean -testcache
