@@ -196,7 +196,7 @@ func etcdv3T_2(t *testing.T, encTyp string) {
 	sb := New()
 
 	err := sb.Init("etcdv3", encTyp, source.Options{
-		Path:         "127.0.0.1:2379",
+		Path:         "http://127.0.0.1:2379",
 		Key:          "cs/s4/soulsbag." + encTyp,
 		AuthUser:     "root",
 		AuthPassword: "123456",
